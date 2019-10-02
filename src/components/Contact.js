@@ -29,31 +29,48 @@ export default class Contact extends Component {
         }
       ]
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleCreate = this.handleCreate.bind(this);
-    this.handleRemove = this.handleRemove.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
   }
 
-  handleChange(e) {
+  UNSAFE_componentWillMount = () => {
+    const contactD = localStorage.contactData;
+    if (contactD) {
+      this.setState({
+        contactData: JSON.parse(contactD)
+      });
+    }
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      JSON.stringify(prevState.contactDate) !==
+      JSON.stringify(this.state.contactData)
+    ) {
+      localStorage.contactData = JSON.stringify(this.state.contactData);
+    }
+  };
+
+  handleChange = e => {
     this.setState({ keyword: e.target.value });
-  }
+  };
 
-  handleClick(key) {
+  handleClick = key => {
     this.setState({
       selectedKey: key
     });
     console.log(key, "is seleted");
-  }
+  };
 
-  handleCreate(contact) {
+  handleCreate = contact => {
+    // this.setState({
+    //   contactData: update(this.state.contactData, { $push: [contact] })
+    // });
+    const { contactData } = this.state;
     this.setState({
-      contactData: update(this.state.contactData, { $push: [contact] })
+      contactData: contactData.concat({ ...contact })
     });
-  }
+  };
 
-  handleRemove() {
+  handleRemove = () => {
     if (this.state.selectedKey < 0) {
       return;
     }
@@ -63,9 +80,9 @@ export default class Contact extends Component {
       }),
       selectedKey: -1
     });
-  }
+  };
 
-  handleEdit(name, phone) {
+  handleEdit = (name, phone) => {
     this.setState({
       contactData: update(this.state.contactData, {
         [this.state.selectedKey]: {
@@ -74,7 +91,7 @@ export default class Contact extends Component {
         }
       })
     });
-  }
+  };
 
   render() {
     const mapToComponents = data => {

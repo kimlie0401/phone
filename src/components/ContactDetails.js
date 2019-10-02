@@ -29,9 +29,12 @@ export default class ContactDetails extends Component {
   }
 
   handleChange(e) {
-    let nextState = {};
-    nextState[e.target.name] = e.target.value;
-    this.setState(nextState);
+    // let nextState = {};
+    // nextState[e.target.name] = e.target.value;
+    // this.setState(nextState);
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
 
   handleEdit() {

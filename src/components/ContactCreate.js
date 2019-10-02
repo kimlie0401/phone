@@ -7,18 +7,18 @@ export default class ContactCreate extends Component {
       name: "",
       phone: ""
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
-  handleChange(e) {
-    let nextState = {};
-    nextState[e.target.name] = e.target.value;
-    this.setState(nextState);
-  }
+  handleChange = e => {
+    // let nextState = {};
+    // nextState[e.target.name] = e.target.value;
+    // this.setState(nextState);
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
 
-  handleClick() {
+  handleClick = () => {
     const contact = {
       name: this.state.name,
       phone: this.state.phone
@@ -29,13 +29,13 @@ export default class ContactCreate extends Component {
       phone: ""
     });
     this.nameInput.focus();
-  }
+  };
 
-  handleKeyPress(e) {
+  handleKeyPress = e => {
     if (e.charCode === 13) {
       this.handleClick();
     }
-  }
+  };
 
   render() {
     return (
