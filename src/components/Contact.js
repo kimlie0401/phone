@@ -40,7 +40,7 @@ export default class Contact extends Component {
         return textA < textB ? -1 : textA > textB ? 1 : 0;
       });
       data = data.filter(contact => {
-        return contact.name.toLowerCase().indexOf(this.state.keyword) >= 0;
+        return contact.name.toLowerCase().indexOf(this.state.keyword) > -1;
       });
       return data.map((contact, i) => {
         return <ContactInfo contact={contact} key={i} />;
